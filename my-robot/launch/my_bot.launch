@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+<param name="robot_description" command="$(find xacro)/xacro '$(find my-robot)/description/robot.urdf.xacro'"/>
+<param name="use_sim_time" value="true"/>
+
+<node name="robot_st_pub_node" pkg="robot_state_publisher" type="robot_state_publisher"></node>
+
+</launch>

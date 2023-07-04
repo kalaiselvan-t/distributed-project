@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+
+    <param name="robot_description" command="$(find xacro)/xacro '$(find my-robot)/description/robot.urdf.xacro'"/>
+    <param name="use_sim_time" value="true"/>
+    
+
+    <node name="rsp_node" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="gazebo" pkg="gazebo_ros" type="gazebo" output="screen">
+        <!-- <rosparam file="$(find my-robot)/config/gazebo_params.yaml" /> -->
+    </node>
+    <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -z 1 -model my_bot" output="screen"/>
+    
+    <include file="$(find slam_toolbox)/online_async.launch" args="param_file:=/home/surveillance-project/src/my-robot/config/mapper_params_online_async.yaml use_sim_time:=true"/>
+    <node name="lidar_pub" pkg="my-robot" type="lidar_pub.py" />
+    <node name="rviz" pkg="rviz" type="rviz"/>
+
+</launch>
